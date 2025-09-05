@@ -1,0 +1,18 @@
+{
+  "name": "xp-leveling-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "discord.js": "^14.22.1",
+    "dotenv": "^17.2.2",
+    "mongoose": "^8.18.0",
+    "nodemon": "^3.1.10"
+  }
+}
