@@ -4,6 +4,6 @@ A bot that rewards users with XP (experience points) when they chat in a Discord
 
 # Features:
 
-- XP + Level system
+- XP + Level system (completed)
 - !profile command
 - !leaderboard command
