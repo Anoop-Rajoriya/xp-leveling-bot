@@ -5,10 +5,9 @@ const { xpToNextLevel } = require("../utils");
 module.exports = {
   name: Events.MessageCreate,
   once: false,
-  execute: async function (message, client) {
+  execute: async function (message) {
     if (message.author.bot) return;
 
-    const messageContent = message.content;
     const userId = message.author.id;
     const serverId = message.guild?.id;
     const minXP = 5;
@@ -16,8 +15,9 @@ module.exports = {
     const coolDown = 60000; // 1 min
 
     let user = await User.findOne({ userId, serverId });
-
     if (!user) user = await User.create({ userId, serverId });
+
+    const preLevel = user.level;
 
     const canGainXP =
       !user.lastMessageAt ||
@@ -35,5 +35,11 @@ module.exports = {
     }
 
     user.save();
+
+    if (user.level > preLevel) {
+      message.channel.send(
+        `🎉 GG <@${userId}>! You just leveled up to **Level ${user.level}**!`
+      );
+    }
   },
 };
