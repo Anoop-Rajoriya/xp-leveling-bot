@@ -1,24 +1,13 @@
 const { env, client, connectDB } = require("./src/config");
-const path = require("path");
-const fs = require("fs");
+const loadEvents = require("./src/handlers/eventHandler");
+const loadCommands = require("./src/handlers/commandHandler");
+const deployCommands = require("./src/deployCommands");
 
 connectDB();
 
-// Bot Event Handling
-const eventsPath = path.join(__dirname, "./src/events");
-const eventsFiles = fs
-  .readdirSync(eventsPath)
-  .filter((file) => file.endsWith(".js"));
+loadCommands(client);
+deployCommands(client);
 
-for (const file of eventsFiles) {
-  const filePath = path.join(eventsPath, file);
-  const event = require(filePath);
-
-  if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
-  } else {
-    client.on(event.name, (...args) => event.execute(...args, client));
-  }
-}
+loadEvents(client);
 
 client.login(env.botToken);
